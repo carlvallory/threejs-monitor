@@ -1,0 +1,14 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
+}
+  
+h1 {
+    font-size: 18px;
+}
+  
+#memory-stats {
+    margin-top: 10px;
+}
+  

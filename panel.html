@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Three.js and RAM Monitor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .stats-section {
+      margin-top: 20px;
+    }
+    .stats-section p {
+      margin: 5px 0;
+    }
+    #error {
+      color: red;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Three.js Stats Section -->
+  <div class="stats-section">
+    <h2>Three.js Stats</h2>
+    <p>Vertices: <span id="vertices">0</span></p>
+    <p>Geometries: <span id="geometries">0</span></p>
+    <p>Textures: <span id="textures">0</span></p>
+  </div>
+
+  <div class="stats-section">
+    <h2>Tab Memory (JavaScript)</h2>
+    <p>Total JS Heap: <span id="total-js-heap">0 MB</span></p>
+    <p>Used JS Heap: <span id="used-js-heap">0 MB</span></p>
+    <p>JS Heap Limit: <span id="js-heap-limit">0 MB</span></p>
+  </div>
+
+  <!-- System RAM Stats Section -->
+  <div class="stats-section">
+    <h2>System RAM</h2>
+    <p>Total RAM: <span id="total-ram">0 MB</span></p>
+    <p>Used RAM: <span id="used-ram">0 MB</span></p>
+    <p>Available RAM: <span id="available-ram">0 MB</span></p>
+  </div>
+
+  <!-- Error Section (Optional for Debugging) -->
+  <div id="error"></div>
+
+  <script src="panel.js"></script>
+</body>
+</html>
