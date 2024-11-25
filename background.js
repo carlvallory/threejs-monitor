@@ -1,4 +1,8 @@
 let latestMemoryStats = null;
+let threeJSStats = null;
+let unusedMaterials = { count: 0, list: [] };
+let unusedGeometries = { count: 0, list: [] };
+let shaderUniforms = [];
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === "get-ram-usage") {
@@ -56,7 +60,46 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       }
       return true;
     }
+    
+    if (message.type === "unused-materials") {
+      try {
+        unusedMaterials = { count: message.count, list: message.unusedMaterials },
 
-    console.error("Unhandled message type:", message.type);
+        console.log("[Background] Unused materials:", message.unusedMaterials);
+      } catch (error) {
+        console.error("Error handling unused-materials:", error.message);
+      }
+    }
+
+    if (message.type === "unused-geometries") {
+      try {
+        unusedGeometries = { count: message.count, list: message.unusedGeometries };
+        console.log("[Background] Unused geometries:", message.unusedGeometries);
+      } catch (error) {
+        console.error("Error handling unused-geometries:", error.message);
+      }
+    }
+
+    if (message.type === "shader-uniforms") {
+      try {
+        shaderUniforms = message.uniforms;
+        console.log("[Background] Shader uniforms:", message.uniforms);
+      } catch (error) {
+        console.error("Error handling shader-uniforms:", error.message);
+      }
+    }
+
+    if (message.type === "get-debug-stats") {
+      sendResponse({
+        threeJSStats,
+        latestMemoryStats,
+        unusedMaterials,
+        unusedGeometries,
+        shaderUniforms,
+      });
+      return true; // Permite respuestas asíncronas
+    }
+ 
+    console.error("[Background] Unhandled message type:", message.type);
     return false;
 });

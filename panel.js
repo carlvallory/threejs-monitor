@@ -66,13 +66,35 @@ function updateTabMemoryStats() {
         console.log(error.message);
     }
 }
-  
+
+function updateDebugStats() {
+  try {
+    chrome.runtime.sendMessage({ type: "get-debug-stats" }, (response) => {
+      if (chrome.runtime.lastError) {
+        console.error("Error fetching tab memory stats:", chrome.runtime.lastError.message);
+        return;
+      }
+
+      if(response) {
+        document.getElementById("unused-materials-count").textContent = response.unusedMaterials.count || 0;
+        document.getElementById("unused-geometries-count").textContent = response.unusedGeometries.count || 0;
+        document.getElementById("shader-errors").textContent = response.shaderUniforms.length || 0;
+        document.getElementById("shader-uniforms").textContent = response.shaderUniforms.length || 0;
+      } else {
+        console.error("No response for debug stats.");
+      }
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
 // Update stats every second
 function updateStats() {
   updateThreeJSStats();
   updateRAMUsage();
   updateTabMemoryStats();
+  updateDebugStats();
 }
 
 function initializePanel() {
